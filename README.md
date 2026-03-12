@@ -74,8 +74,6 @@ ai_university_predictor/
 - **Accuracy**: ~95%
 
 ## 📽️ Video Demo
-
-[Link to video demo]
 https://www.youtube.com/watch?v=6Qev1Khqnq8
 ---
 
