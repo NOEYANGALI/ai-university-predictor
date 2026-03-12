@@ -1,0 +1,283 @@
+{% extends "layout.html" %}
+{% block title %}Predict · AI University Predictor{% endblock %}
+
+{% block head %}
+<style>
+.page-header {
+    margin-bottom: 2.5rem;
+}
+.page-header h1 {
+    font-size: 2.5rem;
+    letter-spacing: -0.03em;
+    margin: 0.5rem 0;
+}
+.page-header p {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+input[type="text"],
+input[type="number"] {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--border);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(108,99,255,0.5);
+}
+
+.slider-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    min-width: 2rem;
+    text-align: center;
+}
+
+.error-msg {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    color: #fca5a5;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.submit-row {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.info-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.info-card h4 {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-display);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 3px 0;
+}
+
+.info-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .info-cards { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="page-header fade-up">
+    <span class="badge">⚡ AI Prediction Engine</span>
+    <h1>Student Risk Assessment</h1>
+    <p>Enter student academic data to generate a personalized support prediction</p>
+</div>
+
+{% if error %}
+<div class="error-msg fade-up">⚠️ {{ error }}</div>
+{% endif %}
+
+<div class="card fade-up-2">
+    <form action="/predict" method="post">
+
+        <div class="form-grid">
+            <!-- Student Name -->
+            <div class="form-group full">
+                <label>Student Name</label>
+                <input type="text" name="student_name" placeholder="Enter student name..." value="Noe Juan Yangali Ibarra">
+            </div>
+
+            <!-- GPA -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>GPA</label>
+                    <span class="label-hint">0.0 – 4.0</span>
+                </div>
+                <input type="number" name="gpa" min="0" max="4" step="0.01" placeholder="e.g. 3.5" required>
+            </div>
+
+            <!-- Attendance -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Attendance %</label>
+                    <span class="label-hint">0 – 100</span>
+                </div>
+                <input type="number" name="attendance" min="0" max="100" step="1" placeholder="e.g. 85" required>
+            </div>
+
+            <!-- Library Usage -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Library Visits / Month</label>
+                    <span class="label-hint">0 – 15</span>
+                </div>
+                <input type="number" name="library_usage" min="0" max="15" step="1" placeholder="e.g. 6" required>
+            </div>
+
+            <!-- Online Activity -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Online Activity Score</label>
+                    <span class="label-hint">0 – 10</span>
+                </div>
+                <input type="number" name="online_activity" min="0" max="10" step="1" placeholder="e.g. 5" required>
+            </div>
+
+            <!-- Stress Level Slider -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Stress Level</label>
+                    <span class="label-hint">1 = Calm · 10 = Burnout</span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" name="stress_level" id="stress" min="1" max="10" value="5"
+                        oninput="document.getElementById('stress_val').textContent = this.value">
+                    <span class="slider-value" id="stress_val">5</span>
+                </div>
+            </div>
+
+            <!-- Sleep Hours Slider -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label>Sleep Hours / Night</label>
+                    <span class="label-hint">3 – 10 hours</span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" name="sleep_hours" id="sleep" min="3" max="10" value="7" step="0.5"
+                        oninput="document.getElementById('sleep_val').textContent = this.value">
+                    <span class="slider-value" id="sleep_val">7</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="submit-row">
+            <button type="submit" class="btn btn-primary">
+                🔍 Analyze Student
+            </button>
+            <a href="/" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<!-- Info cards -->
+<div class="info-cards fade-up-3">
+    <div class="info-card">
+        <h4>📘 High Risk Indicators</h4>
+        <div class="info-item"><div class="info-dot" style="background:#ef4444"></div> GPA below 2.5</div>
+        <div class="info-item"><div class="info-dot" style="background:#ef4444"></div> Attendance below 75%</div>
+        <div class="info-item"><div class="info-dot" style="background:#ef4444"></div> Stress level 7 or above</div>
+        <div class="info-item"><div class="info-dot" style="background:#ef4444"></div> Less than 6 hours of sleep</div>
+    </div>
+    <div class="info-card">
+        <h4>✅ Strong Performance Signs</h4>
+        <div class="info-item"><div class="info-dot"></div> GPA 3.5 or above</div>
+        <div class="info-item"><div class="info-dot"></div> Attendance above 90%</div>
+        <div class="info-item"><div class="info-dot"></div> Stress level 3 or below</div>
+        <div class="info-item"><div class="info-dot"></div> 7–9 hours of sleep</div>
+    </div>
+</div>
+{% endblock %}

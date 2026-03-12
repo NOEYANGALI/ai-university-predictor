@@ -1,0 +1,203 @@
+{% extends "layout.html" %}
+{% block title %}About · AI University Predictor{% endblock %}
+
+{% block head %}
+<style>
+.about-hero { margin-bottom: 3rem; }
+.about-hero h1 { font-size: 2.5rem; letter-spacing: -0.03em; margin: 0.5rem 0; }
+.about-hero p { color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+}
+
+.about-card h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+}
+
+.about-card p, .about-card li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.about-card ul { padding-left: 1.25rem; }
+.about-card li { margin-bottom: 0.4rem; }
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.tech-tag {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    background: rgba(108,99,255,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(108,99,255,0.2);
+    font-weight: 500;
+}
+
+.author-card {
+    background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(0,212,170,0.05));
+    border: 1px solid rgba(108,99,255,0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.author-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin: 0 auto 1rem;
+}
+
+.author-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.author-sub { font-size: 0.85rem; color: var(--muted); }
+
+.variable-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.variable-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.variable-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: var(--muted);
+}
+
+.variable-table td:first-child {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+
+{% block main %}
+
+<div class="about-hero fade-up">
+    <span class="badge">📖 About This Project</span>
+    <h1>AI University<br>Service Predictor</h1>
+    <p>A machine learning web application designed to identify students at academic risk and recommend the right university support services — before it's too late.</p>
+</div>
+
+<!-- Author -->
+<div class="author-card fade-up-2">
+    <div class="author-avatar">🎓</div>
+    <div class="author-name">Noe Juan Yangali Ibarra</div>
+    <div class="author-sub">CS50x Final Project · 2026 · Harvard University Online</div>
+</div>
+
+<div class="two-col fade-up-3">
+    <div class="about-card">
+        <h3>🎯 Project Purpose</h3>
+        <p>Universities struggle to identify at-risk students before they drop out or fail. This tool uses machine learning to analyze behavioral and academic signals and flag students who need intervention — enabling advisors to act proactively rather than reactively.</p>
+    </div>
+
+    <div class="about-card">
+        <h3>🤖 The ML Model</h3>
+        <p>The core is a <strong style="color:var(--text)">Random Forest Classifier</strong> with 200 decision trees, trained on a synthetic dataset of 50 university students with 6 behavioral features. Cross-validated to ensure robustness.</p>
+        <div class="tech-stack">
+            <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">Random Forest</span>
+            <span class="tech-tag">Cross-validation</span>
+            <span class="tech-tag">Feature Importance</span>
+        </div>
+    </div>
+</div>
+
+<!-- Variables -->
+<div class="about-card fade-up-4" style="margin-bottom: 1.5rem;">
+    <h3>📊 Input Variables</h3>
+    <table class="variable-table">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Description</th>
+                <th>Range</th>
+                <th>Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>GPA</td><td>Academic grade point average</td><td>0.0 – 4.0</td><td>🔴 High</td></tr>
+            <tr><td>Attendance</td><td>Class attendance percentage</td><td>0 – 100%</td><td>🔴 High</td></tr>
+            <tr><td>Library Usage</td><td>Monthly library visits</td><td>0 – 15</td><td>🟡 Medium</td></tr>
+            <tr><td>Online Activity</td><td>Digital platform engagement score</td><td>0 – 10</td><td>🟡 Medium</td></tr>
+            <tr><td>Stress Level</td><td>Self-reported stress (1=calm, 10=burnout)</td><td>1 – 10</td><td>🔴 High</td></tr>
+            <tr><td>Sleep Hours</td><td>Average nightly sleep duration</td><td>3 – 10h</td><td>🟡 Medium</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="two-col fade-up">
+    <div class="about-card">
+        <h3>🛠️ Tech Stack</h3>
+        <div class="tech-stack">
+            <span class="tech-tag">Python 3</span>
+            <span class="tech-tag">Flask</span>
+            <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">pandas</span>
+            <span class="tech-tag">Chart.js</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">Jinja2</span>
+            <span class="tech-tag">HTML/CSS/JS</span>
+        </div>
+    </div>
+
+    <div class="about-card">
+        <h3>🧩 CS50 Concepts Used</h3>
+        <ul>
+            <li>Flask routes and session management</li>
+            <li>Jinja2 template inheritance</li>
+            <li>Python data processing with pandas</li>
+            <li>Machine learning with scikit-learn</li>
+            <li>Dynamic charts with Chart.js</li>
+            <li>Form validation (client + server)</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
