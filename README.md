@@ -76,7 +76,7 @@ ai_university_predictor/
 ## 📽️ Video Demo
 
 [Link to video demo]
-
+https://www.youtube.com/watch?v=6Qev1Khqnq8
 ---
 
 *Built for CS50x 2026 — Harvard University*
